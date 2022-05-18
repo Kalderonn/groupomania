@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Node.js Rest Apis with Express, Sequelize and Mysql",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "expres",
+    "sequelize",
+    "mysql",
+    "rest",
+    "api"
+  ],
+  "author": "Mikael Evan",
+  "license": "ISC"
+}
