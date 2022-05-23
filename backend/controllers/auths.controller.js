@@ -36,7 +36,7 @@ const User = db.User;
           .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
           .catch((error) =>
             res.status(400).json({
-              error
+              error: `L'utilisateur ${req.body.email} existe déjà, veuillez crée un nouveau compte !`
             })
           );
       })

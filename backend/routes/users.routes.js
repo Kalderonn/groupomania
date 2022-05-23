@@ -6,8 +6,11 @@ const auth = require('../middleware/auth');
 
 // importation des controllers
 const usersCtrl = require('../controllers/users.controllers');
-// les routes
+
+// Routage de la ressource User
 router.get("/:id", auth, usersCtrl.getOneUser);
+router.delete("/:id", auth, usersCtrl.deleteUser);
+// router.put("/:id", auth, usersCtrl.modifyUser);
 
 
 

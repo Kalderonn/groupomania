@@ -41,7 +41,7 @@ const commentsRoutes = require("./routes/comments.routes");
 // la route pour l'authentification
 app.use("/api/auth", authsRoutes);
 // La route des users utilisateur
-app.use("/api/user", usersRoutes);
+app.use("/api/users", usersRoutes);
 // // La route des publications
 // app.use("/api/publication", publicationsRoutes);
 // // La route des commentaires
