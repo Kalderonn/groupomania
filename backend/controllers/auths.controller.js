@@ -23,7 +23,7 @@ const User = db.User;
     bcrypt
       .hash(req.body.password, 10)
       .then((hash) => {
-        // ce qui va etre enregistré dans mongoDB
+        // ce qui va etre enregistré dans la BD
         const user = new User({
           firstName: req.body.firstName,
           lastName: req.body.lastName,

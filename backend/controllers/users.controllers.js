@@ -1,9 +1,6 @@
 const db = require("../config/db.config");
 const User = db.User;
 
-// Module File System de Node.js
-const fs = require("fs");
-
 /**
  * Nous la méthode findOne() dans notre modèle User pour trouver le User unique ayant le même _id que le paramètre de la requête ;
  * ce User est ensuite retourné dans une Promise et envoyé au front-end ;
@@ -16,7 +13,7 @@ exports.getOneUser = (req, res, next) => {
 };
 
 /**
- * La méthode destroy() de notre modèle fonctionne comme findOne() et updateOne()
+ * La méthode destroy() de notre modèle fonctionne comme findOne() et create()
  * dans le sens où nous lui passons un objet correspondant au document à supprimer.
  * Nous envoyons ensuite une réponse de réussite ou d'échec au front-end.
  * nous utilisons l'ID que nous recevons comme paramètre pour accéder au User correspondant dans la base de données ;
@@ -32,13 +29,14 @@ exports.deleteUser = (req, res, next) => {
           .status(401)
           .json({ message: "seul le propriétaire du compte peut l'effacer" });
       } else {
-        // const filename = user.imageUrl.split("/images/")[1];
+        // const filename = user.imageProfileUrl.split("/images/")[1];
         // fs.unlink(`images/${filename}`, () => {
-          User.destroy({ where: { id: req.params.id }, force: true })
-            .then(() => res.status(200).json({ message: "Compte supprimé !" }))
-            .catch((error) => res.status(400).json({ error }));
+        User.destroy({ where: { id: req.params.id }, force: true })
+          .then(() => res.status(200).json({ message: "Compte supprimé !" }))
+          .catch((error) => res.status(400).json({ error }));
         // });
       }
     })
     .catch((error) => res.status(500).json({ error }));
 };
+

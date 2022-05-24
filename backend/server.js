@@ -1,6 +1,8 @@
 // Import des modules
 const express = require("express");
 const cors = require("cors");
+// import module node pour accéder au path de notre serveur
+const path = require("path");
 
 // import de la connexion à la DB
 const db = require("./config/db.config");
@@ -38,11 +40,13 @@ const usersRoutes = require("./routes/users.routes");
 const publicationsRoutes = require("./routes/publications.routes");
 const commentsRoutes = require("./routes/comments.routes");
 
+// La route pour accéder au dossier images
+app.use("/images", express.static(path.join(__dirname, "images")));
 // la route pour l'authentification
 app.use("/api/auth", authsRoutes);
 // La route des users utilisateur
 app.use("/api/users", usersRoutes);
-// // La route des publications
-// app.use("/api/publication", publicationsRoutes);
+// La route des publications
+app.use("/api/publications", publicationsRoutes);
 // // La route des commentaires
-// app.use("/api/comment", commentsRoutes);
+// app.use("/api/comments", commentsRoutes);
