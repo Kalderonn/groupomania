@@ -13,7 +13,7 @@ router.post("/", auth, multer, publicationsCtrl.createPublication);
 
 // router.put("/:id", auth, multer, publicationsCtrl.modifyPublication);
 
-// router.delete("/:id", auth, publicationsCtrl.deletePublication);
+router.delete("/:id", auth, publicationsCtrl.deletePublication);
 
 // router.get("/:id", auth, publicationsCtrl.getOnePublication);
 
