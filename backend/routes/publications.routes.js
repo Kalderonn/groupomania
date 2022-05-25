@@ -15,7 +15,7 @@ router.post("/", auth, multer, publicationsCtrl.createPublication);
 
 router.delete("/:id", auth, publicationsCtrl.deletePublication);
 
-// router.get("/:id", auth, publicationsCtrl.getOnePublication);
+router.get("/:id", auth, publicationsCtrl.getOnePublication);
 
 // router.get("/", auth, publicationsCtrl.getAllpublications);
 

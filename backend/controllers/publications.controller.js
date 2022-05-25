@@ -60,3 +60,14 @@ exports.createPublication = (req, res, next) => {
     })
     .catch((err) => console.log("Database Error", err));
 };
+
+/**
+ * Nous la méthode findOne() dans notre modèle Publication pour trouver le Publicationr unique ayant le même _id que le paramètre de la requête ;
+ * ce Publication est ensuite retourné dans une Promise et envoyé au front-end ;
+ * si aucun User n'est trouvé ou si une erreur se produit, nous envoyons une erreur 404 au front-end, avec l'erreur générée.
+ */
+ exports.getOnePublication = (req, res, next) => {
+  Publication.findOne({ where: { id: req.params.id } })
+    .then((publication) => res.status(200).json(publication))
+    .catch((error) => res.status(404).json({ error }));
+};
