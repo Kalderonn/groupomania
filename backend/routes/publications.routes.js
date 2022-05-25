@@ -17,7 +17,7 @@ router.delete("/:id", auth, publicationsCtrl.deletePublication);
 
 router.get("/:id", auth, publicationsCtrl.getOnePublication);
 
-// router.get("/", auth, publicationsCtrl.getAllpublications);
+router.get("/", auth, publicationsCtrl.getAllPublications);
 
 // router.post('/:id/like', auth, publicationsCtrl.likePublication);
 

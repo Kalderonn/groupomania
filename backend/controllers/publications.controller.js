@@ -11,7 +11,7 @@ const fs = require("fs");
  * Nous devons donc l'analyser à l'aide de JSON.parse() pour obtenir un objet utilisable.
  * Nous devons également résoudre l'URL complète de notre image, car req.file.filename ne contient que le segment filename .
  * Nous utilisons req.protocol pour obtenir le premier segment (dans notre cas 'http' ).
- * Nous ajoutons '://' , puis utilisons req.get('host') pour résoudre l'hôte du serveur (ici, 'localhost:3000' ).
+ * Nous ajoutons '://' , puis utilisons req.get('host') pour résoudre l'hôte du serveur (ici, 'localhost:4000' ).
  * Nous ajoutons finalement '/images/' et le nom de fichier pour compléter notre URL.
  * La méthode save() renvoie une Promise.
  * Ainsi, dans notre bloc then() ,nous renverrons une réponse de réussite avec un code 201 de réussite.
@@ -70,4 +70,14 @@ exports.createPublication = (req, res, next) => {
   Publication.findOne({ where: { id: req.params.id } })
     .then((publication) => res.status(200).json(publication))
     .catch((error) => res.status(404).json({ error }));
+};
+
+/**
+ * Nous utilisons la méthode findAll() dans notre modèle Publication
+ * afin de renvoyer un tableau contenant tous les publications dans notre base de données.
+ */
+ exports.getAllPublications = (req, res, next) => {
+  Publication.findAll( {order: [["id", "DESC"]] })
+    .then((publications) => res.status(200).json(publications))
+    .catch((error) => res.status(400).json({ error }));
 };

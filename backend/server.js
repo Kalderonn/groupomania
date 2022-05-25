@@ -44,7 +44,7 @@ const commentsRoutes = require("./routes/comments.routes");
 app.use("/images", express.static(path.join(__dirname, "images")));
 // la route pour l'authentification
 app.use("/api/auth", authsRoutes);
-// La route des users utilisateur
+// La route des users
 app.use("/api/users", usersRoutes);
 // La route des publications
 app.use("/api/publications", publicationsRoutes);
