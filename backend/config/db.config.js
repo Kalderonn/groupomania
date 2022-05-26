@@ -34,7 +34,7 @@ db.User.hasMany(db.Publication)
 db.User.hasMany(db.Comment)
 
 db.Publication.belongsTo(db.User)
-db.Publication.hasMany(db.Comment)
+db.Publication.hasMany(db.Comment, {onDelete:'cascade'} )
 
 db.Comment.belongsTo(db.User)
 db.Comment.belongsTo(db.Publication)

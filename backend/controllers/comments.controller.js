@@ -20,14 +20,14 @@ const Comment = db.Comment;
 exports.createComment = (req, res, next) => {
   const commentObject = JSON.parse(req.body.comment);
   const url = req.originalUrl;
-  const commentId = url.split("/")[3];
+  const publicationId = url.split("/")[3];
   const comment = new Comment({
     ...commentObject,
     // imageUrl: `${req.protocol}://${req.get("host")}/images/${
     //   req.file.filename
     // }`,
     userId: req.auth.userId,
-    commentId: commentId,
+    publicationId: publicationId,
   });
   comment
     .save()
@@ -52,7 +52,7 @@ exports.createComment = (req, res, next) => {
         console.log(req.auth.isAdmin);
   
         if (comment.userId === req.auth.userId || req.auth.isAdmin === true) {
-          const filename = comment.imageUrl.split("/images/")[1];
+          // const filename = comment.imageUrl.split("/images/")[1];
         //   fs.unlink(`images/${filename}`, () => {
             Comment.destroy({ where: { id: req.params.id }, force: true })
               .then(() =>
@@ -86,7 +86,10 @@ exports.getOneComment = (req, res, next) => {
  * afin de renvoyer un tableau contenant tous les Comments dans notre base de données.
  */
 exports.getAllComments = (req, res, next) => {
-  Comment.findAll({ order: [["createdAt", "DESC"]] })
+  const url = req.originalUrl;
+  const publicationId = url.split("/")[3];
+  console.log(publicationId)
+  Comment.findAll({ where: { publicationId: publicationId }, order: [["createdAt", "DESC"]] })
     .then((comments) => res.status(200).json(comments))
     .catch((error) => res.status(400).json({ error }));
 };
