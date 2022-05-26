@@ -29,15 +29,21 @@ db.sequelize = sequelize;
 db.User = require("../models/user.model")(sequelize, DataTypes);
 db.Publication = require("../models/publication.model")(sequelize, DataTypes);
 db.Comment = require("../models/comment.model")(sequelize, DataTypes);
+db.Like = require("../models/like.model")(sequelize, DataTypes);
 
 db.User.hasMany(db.Publication)
 db.User.hasMany(db.Comment)
+db.User.hasMany(db.Like)
 
 db.Publication.belongsTo(db.User)
 db.Publication.hasMany(db.Comment, {onDelete:'cascade'} )
+db.Publication.hasMany(db.Like, {onDelete:'cascade'})
 
 db.Comment.belongsTo(db.User)
 db.Comment.belongsTo(db.Publication)
+
+db.Like.belongsTo(db.User)
+db.Like.belongsTo(db.Publication)
 
 // A activer en prod
 // db.sequelize.sync({ force: false })

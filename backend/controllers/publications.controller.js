@@ -113,3 +113,18 @@ exports.getAllPublications = (req, res, next) => {
     .then((publications) => res.status(200).json(publications))
     .catch((error) => res.status(400).json({ error }));
 };
+
+/**
+ * nous utilisons la méthode findOne() dans notre modèle publication pour trouver le publication unique ayant le même _id que le paramètre de la requête ;
+ * La méthode includes() permet de déterminer si un tableau contient une valeur et renvoie true si c'est le cas, false sinon.
+ */
+ exports.likePublication = (req, res, next) => {
+  const like = req.body.like;
+  const userId = req.auth.userId;
+
+  Publication.findOne({ id: req.params.id })
+    .then((publication) => {
+
+    })
+    .catch((error) => res.status(500).json(error));
+};
