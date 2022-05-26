@@ -1,6 +1,6 @@
 const db = require("../config/db.config");
 const Publication = db.Publication;
-
+const Like = db.Like;
 // Module File System de Node.js
 const fs = require("fs");
 
@@ -118,13 +118,36 @@ exports.getAllPublications = (req, res, next) => {
  * nous utilisons la méthode findOne() dans notre modèle publication pour trouver le publication unique ayant le même _id que le paramètre de la requête ;
  * La méthode includes() permet de déterminer si un tableau contient une valeur et renvoie true si c'est le cas, false sinon.
  */
- exports.likePublication = (req, res, next) => {
-  const like = req.body.like;
+exports.likePublication = (req, res, next) => {
   const userId = req.auth.userId;
+  const url = req.originalUrl;
+  const publicationId = url.split("/")[3];
+  console.log(publicationId);
+  console.log(userId);
 
-  Publication.findOne({ id: req.params.id })
-    .then((publication) => {
-
-    })
-    .catch((error) => res.status(500).json(error));
+  Like.findOne({ where: { userId: userId, publicationId: publicationId } })
+      .then((like) => {
+        if (like) {
+          Like
+            .destroy({ where: { UserId: userId, publicationId: publicationId } })
+              // { truncate: true, restartIdentity: true })
+            .then(() =>
+              res
+                .status(200)
+                .json({ message: "Vous n'aimez plus cette publication" })
+            )
+            .catch((error) => res.status(400).json({ error }));
+        } else {
+          Like
+            .create({
+              userId: userId,
+              publicationId: publicationId,
+            })
+            .then(() =>
+              res.status(200).json({ message: "Vous aimez cette publication" })
+            )
+            .catch((error) => res.status(400).json({ error }));
+        }
+      })
+      .catch((error) => res.status(500).json(error));
 };
