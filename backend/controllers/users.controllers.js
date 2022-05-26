@@ -24,19 +24,20 @@ exports.getOneUser = (req, res, next) => {
 exports.deleteUser = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then((user) => {
-      if (user.id !== req.auth.userId) {
-        res
-          .status(401)
-          .json({ message: "seul le propriétaire du compte peut l'effacer" });
-      } else {
+      console.log(req.auth.userId)
+      console.log(req.auth.isAdmin)
+      if ((user.id === req.auth.userId) || (req.auth.isAdmin === true)) {
         // const filename = user.imageProfileUrl.split("/images/")[1];
         // fs.unlink(`images/${filename}`, () => {
         User.destroy({ where: { id: req.params.id }, force: true })
           .then(() => res.status(200).json({ message: "Compte supprimé !" }))
           .catch((error) => res.status(400).json({ error }));
         // });
+      } else {
+        res
+          .status(401)
+          .json({ message: "seul le propriétaire du compte peut l'effacer ou l'administrateur" });
       }
     })
     .catch((error) => res.status(500).json({ error }));
 };
-

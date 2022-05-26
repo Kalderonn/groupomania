@@ -48,5 +48,5 @@ app.use("/api/auth", authsRoutes);
 app.use("/api/users", usersRoutes);
 // La route des publications
 app.use("/api/publications", publicationsRoutes);
-// // La route des commentaires
-// app.use("/api/comments", commentsRoutes);
+// La route des commentaires
+app.use("/api/publications/:id/comments", commentsRoutes);

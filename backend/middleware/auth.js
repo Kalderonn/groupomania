@@ -18,12 +18,14 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, `${process.env.JWT_KEY_TOKEN}`);
     // nous extrayons l'ID utilisateur de notre token
     const userId = decodedToken.userId;
+    const isAdmin = decodedToken.isAdmin;
     // Dans notre middleware d'authentification, nous ajoutons un objet  auth  à l'objet de requête qui contient le  userId  extrait du token :
-    req.auth = { userId };
+    req.auth = { userId, isAdmin };
+    // console.log(req.auth)
     // Si la requête contient un userId et que ce userId est différent de celui extrait du token
     if (req.body.userId && (req.body.userId !== userId)) {
       // alors on renvoie un message d'erreur
-      throw "L'indentifiant de l'utilisateur est invalide";
+      return res.status(401).json({error: "Utilisateur non valide !"});
       //sinon on passe au middleware suivant avec la fonction next()
     } else {
       next();

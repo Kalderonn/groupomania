@@ -42,31 +42,63 @@ exports.createPublication = (req, res, next) => {
  * nous utilisons ensuite la fonction unlink du package fs pour supprimer ce fichier, en lui passant le fichier à supprimer et le callback à exécuter une fois ce fichier supprimé ;
  * dans le callback, nous implémentons la logique d'origine, en supprimant le Publication de la base de données.
  */
- exports.deletePublication = (req, res, next) => {
+// exports.deletePublication = (req, res, next) => {
+//   Publication.findOne({ where: { id: req.params.id } })
+//     .then((publication) => {
+//       console.log(req.auth.userId);
+//       console.log(req.auth.isAdmin);
+
+//       if (publication.userId !== req.auth.userId || req.auth.isAdmin === false) {
+//         res
+//           .status(401)
+//           .json({
+//             message:
+//               "seul le propriétaire de la publication ou l'administrateur peut l'effacer",
+//           });
+//       } else if (publication.userId === req.auth.userId || req.auth.isAdmin === true) {
+//         const filename = publication.imageUrl.split("/images/")[1];
+//         fs.unlink(`images/${filename}`, () => {
+//           Publication.destroy({ where: { id: req.params.id }, force: true })
+//             .then(() =>
+//               res.status(200).json({ message: "Publication supprimée !" })
+//             )
+//             .catch((error) => res.status(400).json({ error }));
+//         });
+//       }
+//     })
+//     .catch((err) => console.log("Database Error", err));
+// };
+
+exports.deletePublication = (req, res, next) => {
   Publication.findOne({ where: { id: req.params.id } })
     .then((publication) => {
-      if (publication.userId !== req.auth.userId) {
-        res
-          .status(401)
-          .json({ message: "seul le propriétaire de la publication peut l'effacer" });
-      } else {
+      console.log(req.auth.userId);
+      console.log(req.auth.isAdmin);
+
+      if (publication.userId === req.auth.userId || req.auth.isAdmin === true) {
         const filename = publication.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
-        Publication.destroy({ where: { id: req.params.id }, force: true})
-          .then(() => res.status(200).json({ message: "Publication supprimée !" }))
-          .catch((error) => res.status(400).json({ error }));
+          Publication.destroy({ where: { id: req.params.id }, force: true })
+            .then(() =>
+              res.status(200).json({ message: "Publication supprimée !" })
+            )
+            .catch((error) => res.status(400).json({ error }));
+        });
+      } else {
+        res.status(401).json({
+          message:
+            "seul le propriétaire de la publication ou l'administrateur peut l'effacer",
         });
       }
     })
     .catch((err) => console.log("Database Error", err));
 };
-
 /**
  * Nous la méthode findOne() dans notre modèle Publication pour trouver le Publicationr unique ayant le même _id que le paramètre de la requête ;
  * ce Publication est ensuite retourné dans une Promise et envoyé au front-end ;
  * si aucun User n'est trouvé ou si une erreur se produit, nous envoyons une erreur 404 au front-end, avec l'erreur générée.
  */
- exports.getOnePublication = (req, res, next) => {
+exports.getOnePublication = (req, res, next) => {
   Publication.findOne({ where: { id: req.params.id } })
     .then((publication) => res.status(200).json(publication))
     .catch((error) => res.status(404).json({ error }));
@@ -76,8 +108,8 @@ exports.createPublication = (req, res, next) => {
  * Nous utilisons la méthode findAll() dans notre modèle Publication
  * afin de renvoyer un tableau contenant tous les publications dans notre base de données.
  */
- exports.getAllPublications = (req, res, next) => {
-  Publication.findAll( {order: [["id", "DESC"]] })
+exports.getAllPublications = (req, res, next) => {
+  Publication.findAll({ order: [["createdAt", "DESC"]] })
     .then((publications) => res.status(200).json(publications))
     .catch((error) => res.status(400).json({ error }));
 };
