@@ -11,7 +11,7 @@ const publicationsCtrl = require('../controllers/publications.controller');
 // Les routes sur la ressource publication
 router.post("/", auth, multer, publicationsCtrl.createPublication); 
 
-// router.put("/:id", auth, multer, publicationsCtrl.modifyPublication);
+router.put("/:id", auth, multer, publicationsCtrl.modifyPublication);
 
 router.delete("/:id", auth, publicationsCtrl.deletePublication);
 

@@ -34,6 +34,55 @@ exports.createPublication = (req, res, next) => {
 };
 
 /**
+ * on crée un objet publicationObject qui regarde si req.file existe ou non.
+ * S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant.
+ * On crée ensuite une instance publication à partir de publicationObject , puis on effectue la modification.
+ * 
+ * nous exploitons la méthode update() dans notre modèle publication .
+ * Cela nous permet de mettre à jour la publication qui correspond à l'objet que nous passons comme premier argument.
+ * Nous utilisons aussi le paramètre id passé dans la demande, et le remplaçons par le publication passé comme second argument.
+ */
+ exports.modifyPublication = (req, res, next) => {
+   console.log(req.file)
+   const publicationObject = req.file
+     ? {
+         ...JSON.parse(req.body.publication),
+         imageUrl: `${req.protocol}://${req.get("host")}/images/${
+           req.file.filename
+         }`,
+       }
+     : { ...JSON.parse(req.body.publication) };
+   Publication.findOne({ where: { id: req.params.id } })
+     .then((publication) => {
+       if (!publication) {
+         res.status(404).json({ error: new Error("Cette publication n'existe pas !") });
+       }
+       if (publication.imageUrl !== null && req.file !== undefined) {
+         const filename = publication.imageUrl.split("/images/")[1];
+         fs.unlink(`images/${filename}`, () => {
+           Publication.update(
+             { ...publicationObject, id: req.params.id },
+             { where: { id: req.params.id } }
+           )
+             .then(() =>
+               res.status(200).json({ message: "Publication modifiée !" })
+             )
+             .catch((error) => res.status(400).json({ error }));
+         });
+       } else {
+         Publication.update(
+           { ...publicationObject, id: req.params.id },
+           { where: { id: req.params.id } }
+         )
+           .then(() =>
+             res.status(200).json({ message: "Publication modifiée !" })
+           )
+           .catch((error) => res.status(400).json({ error }));
+       }
+     })
+     .catch((error) => res.status(500).json({ error }));
+ };
+/**
  * La méthode destroy() de notre modèle fonctionne comme findOne() et create()
  * dans le sens où nous lui passons un objet correspondant au document à supprimer.
  * Nous envoyons ensuite une réponse de réussite ou d'échec au front-end.
@@ -42,38 +91,11 @@ exports.createPublication = (req, res, next) => {
  * nous utilisons ensuite la fonction unlink du package fs pour supprimer ce fichier, en lui passant le fichier à supprimer et le callback à exécuter une fois ce fichier supprimé ;
  * dans le callback, nous implémentons la logique d'origine, en supprimant le Publication de la base de données.
  */
-// exports.deletePublication = (req, res, next) => {
-//   Publication.findOne({ where: { id: req.params.id } })
-//     .then((publication) => {
-//       console.log(req.auth.userId);
-//       console.log(req.auth.isAdmin);
-
-//       if (publication.userId !== req.auth.userId || req.auth.isAdmin === false) {
-//         res
-//           .status(401)
-//           .json({
-//             message:
-//               "seul le propriétaire de la publication ou l'administrateur peut l'effacer",
-//           });
-//       } else if (publication.userId === req.auth.userId || req.auth.isAdmin === true) {
-//         const filename = publication.imageUrl.split("/images/")[1];
-//         fs.unlink(`images/${filename}`, () => {
-//           Publication.destroy({ where: { id: req.params.id }, force: true })
-//             .then(() =>
-//               res.status(200).json({ message: "Publication supprimée !" })
-//             )
-//             .catch((error) => res.status(400).json({ error }));
-//         });
-//       }
-//     })
-//     .catch((err) => console.log("Database Error", err));
-// };
-
 exports.deletePublication = (req, res, next) => {
   Publication.findOne({ where: { id: req.params.id } })
     .then((publication) => {
-      console.log(req.auth.userId);
-      console.log(req.auth.isAdmin);
+      // console.log(req.auth.userId);
+      // console.log(req.auth.isAdmin);
 
       if (publication.userId === req.auth.userId || req.auth.isAdmin === true) {
         const filename = publication.imageUrl.split("/images/")[1];
@@ -93,6 +115,7 @@ exports.deletePublication = (req, res, next) => {
     })
     .catch((err) => console.log("Database Error", err));
 };
+
 /**
  * Nous la méthode findOne() dans notre modèle Publication pour trouver le Publicationr unique ayant le même _id que le paramètre de la requête ;
  * ce Publication est ensuite retourné dans une Promise et envoyé au front-end ;
@@ -115,8 +138,8 @@ exports.getAllPublications = (req, res, next) => {
 };
 
 /**
- * nous utilisons la méthode findOne() dans notre modèle publication pour trouver le publication unique ayant le même _id que le paramètre de la requête ;
- * La méthode includes() permet de déterminer si un tableau contient une valeur et renvoie true si c'est le cas, false sinon.
+ * nous utilisons la méthode findOne() dans notre modèle like 
+ * pour trouver si le userId contenu dans le token est dejà associé à la publication concernée(publicationId contenu dans l'Url) ;
  */
 exports.likePublication = (req, res, next) => {
   const userId = req.auth.userId;
@@ -130,7 +153,6 @@ exports.likePublication = (req, res, next) => {
         if (like) {
           Like
             .destroy({ where: { UserId: userId, publicationId: publicationId } })
-              // { truncate: true, restartIdentity: true })
             .then(() =>
               res
                 .status(200)
