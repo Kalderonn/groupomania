@@ -1,0 +1,6 @@
+$primary : #FD2D01;
+$secondary : #FFD7D7;
+$dark : #4E5166;
+// Then import Bootstrap and BootstrapVue SCSS files (order is important)
+@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap-vue/src/index.scss';
