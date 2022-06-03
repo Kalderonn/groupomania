@@ -1,18 +1,18 @@
 <template>
     <div>
             <HeaderNav/>
-            <SignUp/>
+            <Login/>
     </div>
 </template>
 
 <script>
     import HeaderNav from '@/components/HeaderNav.vue'
-    import SignUp from '@/components/SignUp.vue'
+    import Login from '@/components/Login.vue'
     export default {
         name: 'Home',
         components: {
             HeaderNav,  
-            SignUp
+            Login,
         }
     }
 </script>
