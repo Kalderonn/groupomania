@@ -1,7 +1,12 @@
 <template>
     <div>
+        <header>
             <HeaderNav/>
+        </header>
+        <main>
             <Login/>
+        </main>
+            
     </div>
 </template>
 
