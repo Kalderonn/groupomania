@@ -32,7 +32,6 @@
                         <b-button v-if="mode == 'login'" @click.prevent="sendForm" block type="submit" variant="primary">Connexion</b-button>
                         <b-button v-else  @click.prevent="sendForm" block type="submit" variant="primary">S'inscrire</b-button>
                       </div>
-                      
                     </b-form>
                   </b-col>
                   <div class="col-lg-6 col-xl-7 d-flex align-items-center justify-content-center order-1 order-lg-2">
@@ -42,12 +41,13 @@
             </b-card>
       </b-container>
     </section>
+    <router-view/>
   </div>
 </template>
 
 <script>
 
-import axios from 'axios'
+// import axios from 'axios'
 import Axios from '@/_services/axios.config';
 
 export default {
@@ -123,16 +123,29 @@ export default {
     sendForm(){
       if (this.mode == 'create') {
         if((this.validFirstNameInput && this.validLastNameInput && this.validEmailInput && this.validPasswordInput) === true){
-          console.log(JSON.parse(JSON.stringify(this.user)));
-      // Axios.post("/auth/signup",  this.user )
-      //           .then(() => {
-      //               alert('inscription réussie !');
-      //               router.push({ path : '/'});
-      //           })
-      //           .catch((error)=>{
-      //               alert(error.status)
-      //               console.log(error)});
-        } 
+          const userInfo = JSON.parse(JSON.stringify(this.user))
+          // console.log(JSON.parse(JSON.stringify(this.user)));
+          Axios.post("/auth/signup",userInfo )
+            .then(() => {
+                alert('inscription réussie !');
+                this.mode = 'login'
+                this.user ={
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  password: "",
+                }
+            })
+            .catch((error)=>{
+              alert(`L'utilisateur ${this.user.email} existe déjà, veuillez crée un nouveau compte !`);
+              this.user ={
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  password: "",
+                }
+              console.log(error)});
+            } 
       } else if (this.mode == 'login'){
           if ((this.validEmailInput && this.validPasswordInput) === true){
           console.log(this.user);

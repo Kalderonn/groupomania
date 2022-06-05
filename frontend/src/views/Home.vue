@@ -6,7 +6,7 @@
         <main>
             <Login/>
         </main>
-            
+        <router-view/>   
     </div>
 </template>
 
