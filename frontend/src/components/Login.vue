@@ -48,6 +48,7 @@
 <script>
 
 // import axios from 'axios'
+import router from '@/router';
 import Axios from '@/_services/axios.config';
 
 export default {
@@ -149,6 +150,33 @@ export default {
       } else if (this.mode == 'login'){
           if ((this.validEmailInput && this.validPasswordInput) === true){
           console.log(this.user);
+          const userInfo = {
+            email: this.user.email,
+            password: this.user.password
+          }
+          Axios.post("/auth/login",userInfo )
+            .then((res) => {
+                // alert('Connexion réussie !');
+                localStorage.setItem("user", JSON.stringify(res.data));
+                // console.log(res.data)
+                router.push({ path: '/feeds' })
+                this.user = {
+                  firstName:"",
+                  lastName:"",
+                  email: "",
+                  password: ""
+                }
+            })
+            .catch((error)=>{
+              alert(`${error.response.data.error}`)
+              this.user = {
+                  firstName:"",
+                  lastName:"",
+                  email: "",
+                  password: ""
+                }
+              console.log(error.response.data.error)
+            });
         }
       }
     },

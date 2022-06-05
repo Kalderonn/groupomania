@@ -16,10 +16,10 @@ const routes = [
   {
     path: '/feeds',
     name: 'feeds',
-    component: Feed
+    component: Feed,
   },
   {
-    path: '/:pathMacth(.*)*',
+    path: '/:pathMacth(.*)',
     component: NotFound
   }
 ]
