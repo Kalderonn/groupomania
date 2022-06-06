@@ -41,7 +41,7 @@
             </b-card>
       </b-container>
     </section>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
