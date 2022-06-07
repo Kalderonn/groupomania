@@ -2,7 +2,7 @@
     <div>
         <HeaderNav/>
         <PostArticle/>
-        <!-- <Articles/> -->
+        <Articles/>
         <router-view/>
     </div>
 </template>

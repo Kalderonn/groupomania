@@ -6,8 +6,8 @@
                   <b-col class="order-2">
                     <h1 v-if="mode == 'login'">Connexion</h1>
                     <h1 v-else>Inscription</h1>
-                    <p v-if="mode == 'login'" class="mb-4">Toujours pas de compte? <span><a @click="switchToCreateAccount" href="#!">Créer un compte</a></span></p>
-                    <p v-else>Déjà un compte? <span><a @click="switchToLogin" href="#!">Se connecter</a></span></p>
+                    <p v-if="mode == 'login'" class="mb-4">Toujours pas de compte? <span><b-link class="link" @click="switchToCreateAccount" href="#!">Créer un compte</b-link></span></p>
+                    <p v-else>Déjà un compte? <span><b-link class="link" @click="switchToLogin" href="#!">Se connecter</b-link></span></p>
                     <b-form>
                       <div v-if="mode == 'create'">
                       <b-form-group label="Prénom" label-for="firstName">
@@ -28,8 +28,8 @@
                         <b-form-invalid-feedback id="password-feedback">Le mot de passe doit contenir au moins 8 caractères et une lettre majuscule</b-form-invalid-feedback>
                       </b-form-group>
                       <div class="mt-5 mb-3">
-                        <b-button v-if="mode == 'login'" @click.prevent="sendForm" block type="submit" variant="primary">Connexion</b-button>
-                        <b-button v-else  @click.prevent="sendForm" block type="submit" variant="primary">S'inscrire</b-button>
+                        <b-button v-if="mode == 'login'" @click.prevent="sendForm" block type="submit" variant="dark">Connexion</b-button>
+                        <b-button v-else  @click.prevent="sendForm" block type="submit" variant="dark">S'inscrire</b-button>
                       </div>
                     </b-form>
                   </b-col>
@@ -182,4 +182,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.link {
+  color: #DF2601
+}
+</style>

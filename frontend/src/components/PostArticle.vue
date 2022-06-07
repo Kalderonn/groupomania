@@ -8,9 +8,8 @@
                         </b-img>
                     </div> -->
                     <div>
-                        <b-form-group>
-                            <b-form-textarea id="textarea-small" placeholder="Quoi de neuf aujourd'hui?">
-                            </b-form-textarea>
+                        <b-form-group label="Quoi de neuf aujourd'hui??" label-for="post">
+                            <b-form-textarea id="post"></b-form-textarea>
                         </b-form-group>
                         <b-row>
                             <b-col>
@@ -18,8 +17,10 @@
                                 <b-form-file accept="image/*" v-model="file" :state="Boolean(file)"
                                     placeholder="Choisissez une image" drop-placeholder="Drop file here...">
                                 </b-form-file>
-                                <div class="mt-3">Image selectionnée: {{ file ? file.name : '' }}</div>
-                                <b-button class="mt-2" type="submit" variant="primary">Publier</b-button>
+                                <div class="mt-3">
+                                    Image selectionnée: {{ file ? file.name : "" }}
+                                </div>
+                                <b-button class="mt-2" type="submit" variant="dark">Publier</b-button>
                             </b-col>
                         </b-row>
                     </div>
@@ -35,12 +36,10 @@ export default {
     data() {
         return {
             file: null,
-        }
+        };
     },
-    methods:{
-        
-    }
-}
+    methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
