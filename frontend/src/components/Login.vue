@@ -2,8 +2,7 @@
   <div>
     <section>
       <b-container class="d-flex justify-content-center align-items-center">
-            <b-card>
-                <b-row class="align-items-center">
+                <b-row class="align-items-center shadow">
                   <b-col class="order-2">
                     <h1 v-if="mode == 'login'">Connexion</h1>
                     <h1 v-else>Inscription</h1>
@@ -38,7 +37,6 @@
                     <b-img :src="require('../assets/NicePng_instagram-likes-png_7874643.png')" fluid alt="illustration d'un homme et d'une femme sur les réseaux sociaux"></b-img>
                   </div>
                 </b-row>
-            </b-card>
       </b-container>
     </section>
     <router-view></router-view>
