@@ -3,10 +3,6 @@
         <b-container>
             <b-card class="shadow mb-4 bg-secondary">
                 <b-card-body>
-                    <!-- <div class="mb-4">
-                        <b-img center src="https://picsum.photos/1024/400/?image=41" fluid alt="Responsive image">
-                        </b-img>
-                    </div> -->
                     <div>
                         <b-form-group label="Quoi de neuf aujourd'hui??" label-for="post">
                             <b-form-textarea id="post" v-model="content"></b-form-textarea>

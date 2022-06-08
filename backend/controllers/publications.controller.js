@@ -1,6 +1,7 @@
 const db = require("../config/db.config");
 const Publication = db.Publication;
 const Like = db.Like;
+const User = db.User;
 // Module File System de Node.js
 const fs = require("fs");
 
@@ -132,7 +133,7 @@ exports.getOnePublication = (req, res, next) => {
  * afin de renvoyer un tableau contenant tous les publications dans notre base de données.
  */
 exports.getAllPublications = (req, res, next) => {
-  Publication.findAll({ order: [["createdAt", "DESC"]] })
+  Publication.findAll({ order: [["createdAt", "DESC"]], include:[User] })
     .then((publications) => res.status(200).json(publications))
     .catch((error) => res.status(400).json({ error }));
 };

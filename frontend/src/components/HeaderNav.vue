@@ -11,7 +11,7 @@
           </b-img>
         </b-navbar-brand>
         <b-navbar-nav v-if="isConnected == true" class="ml-auto" right>
-          <b-button variant="light">
+          <b-button @click="logout" variant="light">
             <b-icon icon="box-arrow-right" aria-hidden="true"></b-icon>
           </b-button>
         </b-navbar-nav>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import router from '@/router';
 export default {
   name: "HeaderNav",
   data() {
@@ -39,6 +40,12 @@ export default {
         }
       }
     },
+  },
+  methods:{
+    logout(){
+      localStorage.clear()
+      router.push({ path: '/' })
+    }
   },
   beforeMount() {
     this.verifToken;
