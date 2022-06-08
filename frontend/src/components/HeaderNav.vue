@@ -31,8 +31,9 @@ export default {
   computed: {
     verifToken() {
       if (localStorage.length !== 0) {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const token = user.token;
+        // const user = JSON.parse(localStorage.getItem("user"));
+        // const token = user.token;
+        const token = localStorage.getItem("token");
         if (token) {
           return (this.isConnected = true);
         }

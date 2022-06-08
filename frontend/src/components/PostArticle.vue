@@ -9,7 +9,7 @@
                     </div> -->
                     <div>
                         <b-form-group label="Quoi de neuf aujourd'hui??" label-for="post">
-                            <b-form-textarea id="post"></b-form-textarea>
+                            <b-form-textarea id="post" v-model="content"></b-form-textarea>
                         </b-form-group>
                         <b-row>
                             <b-col>
@@ -20,7 +20,8 @@
                                 <div class="mt-3">
                                     Image selectionnée: {{ file ? file.name : "" }}
                                 </div>
-                                <b-button class="mt-2" type="submit" variant="dark">Publier</b-button>
+                                <b-button class="mt-2" type="submit" @click.prevent="sendArticle" variant="dark">Publier
+                                </b-button>
                             </b-col>
                         </b-row>
                     </div>
@@ -31,14 +32,47 @@
 </template>
 
 <script>
+import Axios from '@/_services/axios.config';
+
 export default {
     name: "Articles",
     data() {
         return {
             file: null,
+            content: ""
         };
     },
-    methods: {},
+    methods: {
+        sendArticle() {
+            const file = this.file
+            const publication = {
+                content: this.content
+            }
+            const formData = new FormData()
+            formData.append("publication", JSON.stringify(publication))
+            formData.append("image", file)
+            Axios.post("/publications",formData)
+                .then((res) => {
+                    this.file = null
+                    this.content = ""
+                    console.log(res)
+                    alert('Publication créée !');
+                })
+                .catch((error) => {
+                    // alert(``);
+                    console.log(error)
+                });
+        },
+    },
+    computed: {
+
+    },
+    beforeMount() {
+        // console.log(this.file);
+    },
+    updated() {
+
+    }
 };
 </script>
 

@@ -123,7 +123,6 @@ export default {
       if (this.mode == 'create') {
         if((this.validFirstNameInput && this.validLastNameInput && this.validEmailInput && this.validPasswordInput) === true){
           const userInfo = JSON.parse(JSON.stringify(this.user))
-          // console.log(JSON.parse(JSON.stringify(this.user)));
           Axios.post("/auth/signup",userInfo )
             .then(() => {
                 alert('inscription réussie !');
@@ -155,8 +154,8 @@ export default {
           Axios.post("/auth/login",userInfo )
             .then((res) => {
                 // alert('Connexion réussie !');
-                localStorage.setItem("user", JSON.stringify(res.data));
-                // console.log(res.data)
+                localStorage.setItem("token", res.data.token);
+                // console.log(typeof res.data.token)
                 router.push({ path: '/feeds' })
                 this.user = {
                   firstName:"",
@@ -166,6 +165,7 @@ export default {
                 }
             })
             .catch((error)=>{
+              console.log(error)
               alert(`${error.response.data.error}`)
               this.user = {
                   firstName:"",
