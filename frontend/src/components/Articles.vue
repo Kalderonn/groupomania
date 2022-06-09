@@ -6,7 +6,7 @@
                     <!-- auteur et date -->
                     <div>
                         <p class="m-0 h2">{{publication.user.firstName + " " + publication.user.lastName}}</p>
-                        <span class="text-muted fs-7">{{ publication.createdAt }}</span>
+                        <span class="text-muted fs-7">{{ formatDate(publication.createdAt) }}</span>
                     </div>
                     <div class="d-flex align-items-center">
                         <!-- edit -->
@@ -37,6 +37,8 @@
 
 <script>
 import Axios from '@/_services/axios.config';
+import moment from 'moment'
+
 export default {
     name: "Articles",
     data() {
@@ -58,6 +60,10 @@ export default {
                     console.log(error)
                 });
         },
+        formatDate(date){
+            moment.locale('fr')
+            return moment(date).fromNow()
+        }
     },
     created() {
         this.getAllPublications()
@@ -67,6 +73,9 @@ export default {
 
 
     },
+    updated(){
+        this.getAllPublications()
+    }
 
 };
 </script>
