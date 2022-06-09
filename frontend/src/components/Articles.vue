@@ -5,7 +5,7 @@
                 <div class="d-flex justify-content-between">
                     <!-- auteur et date -->
                     <div>
-                        <p class="m-0 h2">{{publication.user.firstName + " " + publication.user.lastName}}</p>
+                        <p class="m-0 h2">{{ publication.user.firstName + " " + publication.user.lastName }}</p>
                         <span class="text-muted fs-7">{{ formatDate(publication.createdAt) }}</span>
                     </div>
                     <div class="d-flex align-items-center">
@@ -14,7 +14,8 @@
                             <b-icon role="button" icon="pencil" font-scale="1" aria-hidden="true"></b-icon>
                         </div>
                         <div size="sm" class="mr-2">
-                            <b-icon role="button" icon="trash" variant="danger" font-scale="1" aria-hidden="true">
+                            <b-icon @click="deletePublication(publication.id, publication.user.id, publication.user.isAdmin)" role="button" icon="trash"
+                                variant="danger" font-scale="1" aria-hidden="true">
                             </b-icon>
                         </div>
                     </div>
@@ -44,38 +45,50 @@ export default {
     data() {
         return {
             publications: [],
-            likes: []
+            likes: [],
+            AuthorOrAdmin: false
         }
     },
-    
+
     methods: {
-         getAllPublications() {
-            Axios.get("/publications")
-                .then((response) => {
-                    let publications = response.data
-                    console.log(response.data)
-                    this.publications = publications;
-                })
-                .catch((error) => {
-                    console.log(error)
-                });
-        },
-        formatDate(date){
+        formatDate(date) {
             moment.locale('fr')
             return moment(date).fromNow()
-        }
+        },
+        getAllPublications() {
+            if (this.publications != []) {
+                Axios.get("/publications")
+                    .then((response) => {
+                        this.publications = response.data
+                        console.log(response.data)
+                        // this.publications = publications;
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+            }
+        },
+        deletePublication(publicationId, userId, isAdmin) {
+            console.log("publicationId=", publicationId)
+            console.log("userId=",userId)
+            console.log("isAdmin=",isAdmin)
+
+        },
     },
     created() {
         this.getAllPublications()
+        // rend disponible l'accés à cette méthode depuis un autre composant
+        this.$root.$on('Articles', () => {
+            this.getAllPublications()
+        })
     },
     beforeUpdate() {
         console.log(this.publications)
-
-
     },
-    updated(){
-        this.getAllPublications()
-    }
+    updated() {
+    },
+
+
 
 };
 </script>

@@ -11,7 +11,6 @@ Axios.interceptors.request.use(request => {
   if (localStorage.length !== 0){
         const token = localStorage.getItem("token");
         // const token = user.token;
-        console.log(typeof token)
         console.log(token)
         console.log(request)
         if (token) {
