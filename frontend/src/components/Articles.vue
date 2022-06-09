@@ -14,7 +14,7 @@
                             <b-icon role="button" icon="pencil" font-scale="1" aria-hidden="true"></b-icon>
                         </div>
                         <div size="sm" class="mr-2">
-                            <b-icon @click="deletePublication(publication.id, publication.user.id, publication.user.isAdmin)" role="button" icon="trash"
+                            <b-icon @click="deletePublication(publication)" role="button" icon="trash"
                                 variant="danger" font-scale="1" aria-hidden="true">
                             </b-icon>
                         </div>
@@ -68,10 +68,18 @@ export default {
                     });
             }
         },
-        deletePublication(publicationId, userId, isAdmin) {
-            console.log("publicationId=", publicationId)
-            console.log("userId=",userId)
-            console.log("isAdmin=",isAdmin)
+        deletePublication(publication) {
+            console.log(publication)
+            console.log("userId=",publication.id)
+            Axios.delete("/publications/"+publication.id)
+                    .then((response) => {
+                        console.log(response)
+                        // this.publications = publications;
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+            this.getAllPublications()
 
         },
     },
