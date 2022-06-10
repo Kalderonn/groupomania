@@ -155,7 +155,9 @@ export default {
             .then((res) => {
                 // alert('Connexion réussie !');
                 localStorage.setItem("token", res.data.token);
-                // console.log(typeof res.data.token)
+                localStorage.setItem("currentUser", res.data.userId);
+                localStorage.setItem("isAdmin", res.data.isAdmin);
+                console.log(res.data)
                 router.push({ path: '/feeds' })
                 this.user = {
                   firstName:"",
