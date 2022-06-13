@@ -16,7 +16,7 @@
                                 <div class="mt-3">
                                     Image selectionnée: {{ file ? file.name : "" }}
                                 </div>
-                                <b-button class="mt-2" type="submit" @click.prevent="sendArticle" variant="dark">Publier
+                                <b-button v-if="(file && content)" class="mt-2" type="submit" @click.prevent="sendArticle" variant="dark">Publier
                                 </b-button>
                             </b-col>
                         </b-row>

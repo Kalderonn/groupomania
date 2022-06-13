@@ -53,8 +53,8 @@
                 </div>
                 <!-- post content -->
                 <div class="mt-3">
+                    <p> {{ publication.content }} </p>
                     <div>
-                        <p> {{ publication.content }} </p>
                         <b-img :src=publication.imageUrl alt="post image" fluid center class="rounded" />
                     </div>
                     <div class="mt-3 d-flex justify-content-center">
