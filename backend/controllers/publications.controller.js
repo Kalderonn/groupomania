@@ -133,7 +133,7 @@ exports.getOnePublication = (req, res, next) => {
  * afin de renvoyer un tableau contenant tous les publications dans notre base de données.
  */
 exports.getAllPublications = (req, res, next) => {
-  Publication.findAll({ order: [["createdAt", "DESC"]], include:[User] })
+  Publication.findAll({ order: [["createdAt", "DESC"]], include:[User, Like] })
     .then((publications) => res.status(200).json(publications))
     .catch((error) => res.status(400).json({ error }));
 };
@@ -174,3 +174,9 @@ exports.likePublication = (req, res, next) => {
       })
       .catch((error) => res.status(500).json(error));
 };
+exports.getAllLikes = (req, res, next) => {
+  Like.findAll()
+    .then((likes) => res.status(200).json(likes))
+    .catch((error) => res.status(400).json({ error }));
+};
+

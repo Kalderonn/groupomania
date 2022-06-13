@@ -8,17 +8,17 @@ const Axios = axios.create({
 
 // intercepteur Axios qui va récupérer nos requêtes et injecter le token dans le header
 Axios.interceptors.request.use(request => {
-  if (localStorage.length !== 0){
+  // if (localStorage.length !== 0){
         const token = localStorage.getItem("token");
         // const token = user.token;
-        console.log(token)
-        console.log(request)
+        // console.log(token)
+        // console.log(request)
         if (token) {
           request.headers.Authorization = 'Bearer '+ token
         }
         return request
-      }
-      return request
+      // }
+      // return request
 })
 
 export default Axios;

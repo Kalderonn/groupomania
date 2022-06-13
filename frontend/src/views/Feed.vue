@@ -17,7 +17,7 @@
         components:{
             HeaderNav,
             Articles,
-            PostArticle
+            PostArticle,
         },
     }
 </script>

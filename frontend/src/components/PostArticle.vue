@@ -31,7 +31,7 @@
 import Axios from '@/_services/axios.config';
 
 export default {
-    name: "Articles",
+    name: "PostArticle",
     data() {
         return {
             file: null,
@@ -47,13 +47,13 @@ export default {
             const formData = new FormData()
             formData.append("publication", JSON.stringify(publication))
             formData.append("image", file)
-            Axios.post("/publications",formData)
+            Axios.post("/publications", formData)
                 .then((res) => {
                     this.file = null
                     this.content = ""
                     console.log(res)
                     // permet d'executer une méthode contenue dans un autre composant
-                    this.$root.$emit('Articles')
+                    // this.$root.$emit('Articles')
                     alert('Publication créée !');
                 })
                 .catch((error) => {

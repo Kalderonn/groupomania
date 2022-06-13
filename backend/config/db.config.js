@@ -46,14 +46,14 @@ db.Like.belongsTo(db.User)
 db.Like.belongsTo(db.Publication)
 
 // A activer en prod
-db.sequelize.sync({ force: false })
-.then(() => {
-    console.log('yes re-sync done!')
-})
+// db.sequelize.sync({ force: false })
+// .then(() => {
+//     console.log('yes re-sync done!')
+// })
 
 // A activer en dev
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 module.exports = db;
