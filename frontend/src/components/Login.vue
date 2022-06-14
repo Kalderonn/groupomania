@@ -25,7 +25,7 @@
                       </b-form-group>
                       <b-form-group label="Mot de passe" label-for="password">
                         <b-form-input type="password" id="password" v-model="user.password" placeholder="Entrez votre mot de passe" :state="validPasswordInput"></b-form-input>
-                        <b-form-invalid-feedback id="password-feedback">Le mot de passe doit contenir au moins 8 caractères et une lettre majuscule</b-form-invalid-feedback>
+                        <b-form-invalid-feedback id="password-feedback">Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule et un chiffre</b-form-invalid-feedback>
                       </b-form-group>
                       <div class="mt-5 mb-3">
                         <b-button v-if="mode == 'login'" @click.prevent="sendForm" block type="submit" variant="dark">Connexion</b-button>
