@@ -128,7 +128,6 @@ export default {
         editPublication(publication) {
             if (this.edit === false) {
                 this.edit = true
-                // console.log('test')
                 Axios.get(`/publications/${publication.id}`)
                     .then((response) => {
                         this.selectedPublication = response.data
@@ -155,18 +154,15 @@ export default {
                 .then((res) => {
                     this.edit = false
                     console.log(res)
-                    alert('Publication modifiée !');
+                    // alert('Publication modifiée !');
                 })
                 .catch((error) => {
-                    // alert(``);
                     console.log(error)
                 });
 
         },
         verifyLike(publication) {
-            // console.log(publication.id)
             const publicationLiked = publication.likes
-            // console.log(publicationLiked)
             const publicationLikeByCurrentUser = publicationLiked.some((like) =>
                 (like.publicationId == publication.id) && (like.userId == this.currentUserId)
             )
@@ -176,34 +172,22 @@ export default {
             Axios.post(`/publications/${publication.id}/like`)
                 .then((response) => {
                     console.log(publication.likes)
-                    // console.log(this.publications[0].likes)
                     console.log(response.data.message)
                 })
                 .catch((error) => {
                     console.log(error)
                 });
             console.log(this.publications)
-
         }
-    },
-    created() {
-    },
-    beforeMount() {
     },
     mounted() {
         this.addCurrentId
         this.addIsAdmin
         this.getAllPublications
-
     },
     beforeUpdate() {
         this.getAllPublications
     },
-    updated() {
-    },
-
-
-
 };
 </script>
 

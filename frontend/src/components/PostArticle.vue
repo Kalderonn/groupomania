@@ -52,24 +52,13 @@ export default {
                     this.file = null
                     this.content = ""
                     console.log(res)
-                    // permet d'executer une méthode contenue dans un autre composant
-                    // this.$root.$emit('Articles')
-                    alert('Publication créée !');
+                    // alert('Publication créée !');
                 })
                 .catch((error) => {
-                    // alert(``);
                     console.log(error)
                 });
         },
     },
-    computed: {
-
-    },
-    beforeMount() {
-        // console.log(this.file);
-    },
-    updated() {
-    }
 };
 </script>
 

@@ -168,7 +168,7 @@ export default {
             })
             .catch((error)=>{
               console.log(error)
-              alert(`${error.response.data.error}`)
+              // alert(`${error.response.data.error}`)
               this.user = {
                   firstName:"",
                   lastName:"",
