@@ -59,10 +59,10 @@
                     </div>
                     <div class="mt-3 d-flex justify-content-center">
                         <!-- likes -->
-                        <!-- <b-icon @click="addLike(publication)" role="button" icon="heart-fill" variant="danger"
-                            font-scale="1.4" aria-hidden="true">
-                        </b-icon> -->
-                        <b-icon @click="addLike(publication)" role="button" icon="heart" variant="danger"
+                        <b-icon v-if="verifyLike(publication)" @click="addLike(publication)" role="button"
+                            icon="heart-fill" variant="danger" font-scale="1.4" aria-hidden="true">
+                        </b-icon>
+                        <b-icon v-else @click="addLike(publication)" role="button" icon="heart" variant="danger"
                             font-scale="1.4" aria-hidden="true">
                         </b-icon>
                     </div>
@@ -83,7 +83,6 @@ export default {
             publications: [],
             currentUserId: "",
             isAdmin: "",
-            likes: [],
             edit: false,
             selectedPublication: [],
 
@@ -103,39 +102,12 @@ export default {
                 Axios.get("/publications")
                     .then((response) => {
                         this.publications = response.data
-                        // console.log(response.data)
                     })
                     .catch((error) => {
                         console.log(error)
                     });
             }
         },
-        // addAllLikes() {
-        //     this.publications.forEach(publication => {
-        //         // console.log(publication.likes)
-        //         return this.likes = publication.likes
-        //     })
-        // },
-
-        // addAllLikes() {
-        //     this.publications.forEach(publication => {
-        //         // console.log(publication.likes)
-        //         this.likes = publication.likes
-        //     })
-        // }
-        // addAllLikes() {
-        //     // if (this.likes = []) {
-        //         Axios.get("/publications/likes")
-        //             .then((response) => {
-        //              this.likes = response.data
-        //                 console.log(response.data)
-        //             })
-        //             .catch((error) => {
-        //                 console.log(error)
-        //             });
-        //     // }
-
-        // }
     },
     methods: {
         formatDate(date) {
@@ -191,20 +163,28 @@ export default {
                 });
 
         },
+        verifyLike(publication) {
+            // console.log(publication.id)
+            const publicationLiked = publication.likes
+            // console.log(publicationLiked)
+            const publicationLikeByCurrentUser = publicationLiked.some((like) =>
+                (like.publicationId == publication.id) && (like.userId == this.currentUserId)
+            )
+            return publicationLikeByCurrentUser
+        },
         addLike(publication) {
-
             Axios.post(`/publications/${publication.id}/like`)
                 .then((response) => {
-                    // console.log(this.publications)
+                    console.log(publication.likes)
                     // console.log(this.publications[0].likes)
                     console.log(response.data.message)
                 })
                 .catch((error) => {
                     console.log(error)
                 });
-            // this.isLiked
             console.log(this.publications)
-        },
+
+        }
     },
     created() {
     },
