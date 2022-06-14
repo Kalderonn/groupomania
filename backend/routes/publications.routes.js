@@ -19,8 +19,6 @@ router.get("/:id", auth, publicationsCtrl.getOnePublication);
 
 router.get("/", auth, publicationsCtrl.getAllPublications);
 
-router.get("/likes", auth, publicationsCtrl.getAllLikes);
-
 router.post('/:id/like', auth, publicationsCtrl.likePublication);
 
 module.exports = router;

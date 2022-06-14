@@ -9,7 +9,6 @@
                         </b-form-group>
                         <b-row>
                             <b-col>
-                                <!-- <b-file accept="image/*" browse-text="Choisir une image" plain></b-file> -->
                                 <b-form-file accept="image/*" v-model="file" :state="Boolean(file)"
                                     placeholder="Choisissez une image" drop-placeholder="Drop file here...">
                                 </b-form-file>

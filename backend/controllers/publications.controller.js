@@ -174,9 +174,4 @@ exports.likePublication = (req, res, next) => {
       })
       .catch((error) => res.status(500).json(error));
 };
-exports.getAllLikes = (req, res, next) => {
-  Like.findAll()
-    .then((likes) => res.status(200).json(likes))
-    .catch((error) => res.status(400).json({ error }));
-};
 

@@ -11,7 +11,7 @@
           </b-img>
         </b-navbar-brand>
         <b-navbar-nav v-if="isConnected == true" class="ml-auto" right>
-          <b-button @click="logout" variant="light">
+          <b-button size="sm" @click="logout" variant="light">
             <b-icon icon="box-arrow-right" aria-hidden="true"></b-icon>
           </b-button>
         </b-navbar-nav>
@@ -32,8 +32,6 @@ export default {
   computed: {
     verifToken() {
       if (localStorage.length !== 0) {
-        // const user = JSON.parse(localStorage.getItem("user"));
-        // const token = user.token;
         const token = localStorage.getItem("token");
         if (token) {
           return (this.isConnected = true);
