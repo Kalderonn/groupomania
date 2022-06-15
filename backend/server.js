@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 // import module node pour accéder au path de notre serveur
 const path = require("path");
+// import d'helmet
+const helmet = require("helmet");
 
 // import de la connexion à la DB
 const db = require("./config/db.config");
@@ -12,6 +14,10 @@ const app = express();
 
 // Middlewares
 app.use(cors());
+// Application d'helmet
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
