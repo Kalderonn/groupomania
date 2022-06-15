@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+// import des différentes vue
 import Home from '@/views/Home.vue'
 import Feed from '@/views/Feed.vue'
 import NotFound from '@/views/NotFound.vue'
@@ -7,6 +9,7 @@ import NotFound from '@/views/NotFound.vue'
 
 Vue.use(VueRouter)
 
+// Déclaration de nos routes
 const routes = [
   {
     path: '/',
