@@ -29,7 +29,6 @@ exports.signup = (req, res, next) => {
         lastName: req.body.lastName,
         email: emailCryptoJs,
         password: hash,
-        imageProfileUrl: req.body.imageProfileUrl,
       });
       user
         .save()
@@ -44,7 +43,7 @@ exports.signup = (req, res, next) => {
 };
 
 /**
- * nous utilisons notre modèle Mongoose pour vérifier que l'e-mail entré par l'utilisateur correspond à un utilisateur existant de la base de données :
+ * nous utilisons notre modèle Sequelize pour vérifier que l'e-mail entré par l'utilisateur correspond à un utilisateur existant de la base de données :
  * dans le cas contraire, nous renvoyons une erreur 401 Unauthorized ,
  * si l'e-mail correspond à un utilisateur existant, nous continuons ;
  * nous utilisons la fonction compare de bcrypt pour comparer le mot de passe entré par l'utilisateur avec le hash enregistré dans la base de données :
