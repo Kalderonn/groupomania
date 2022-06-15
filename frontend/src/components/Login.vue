@@ -153,7 +153,6 @@ export default {
           }
           Axios.post("/auth/login",userInfo )
             .then((res) => {
-                // alert('Connexion réussie !');
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("currentUser", res.data.userId);
                 localStorage.setItem("isAdmin", res.data.isAdmin);
