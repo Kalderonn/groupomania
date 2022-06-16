@@ -37,7 +37,7 @@ db.User.hasMany(db.Like)
 
 db.Publication.belongsTo(db.User)
 db.Publication.hasMany(db.Comment, {onDelete:'cascade'} )
-db.Publication.hasMany(db.Like, {onDelete:'cascade'})
+db.Publication.hasMany(db.Like, {onDelete:'cascade', foreignKey: { allowNull: false }, hooks: true})
 
 db.Comment.belongsTo(db.User)
 db.Comment.belongsTo(db.Publication)
